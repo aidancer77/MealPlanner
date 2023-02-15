@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<form th:action="@{/register}" th:object="${user}" method="post">
+    <h3>Регистрация</h3>
+    <input type="text" th:field="*{firstName}" placeholder="Имя"/> <br/><br/>
+<!--    <input type="text" th:field="*{lastName}" placeholder="Фамилия"/> <br/><br/>-->
+    <input type="text" th:field="*{email}" placeholder="Адрес электронной почты"/> <br/><br/>
+    <input type="text" th:field="*{sex}" placeholder="Ваш пол"/> <br/><br/>
+    <input type="number" th:field="*{age}" placeholder="Ваш возраст"/> <br/><br/>
+    <input type="password" th:field="*{password}" placeholder="Пароль"/> <br/><br/>
+    <input type="password" th:field="*{confirmPassword}" placeholder="Подтвердите пароль"/> <br/><br/>
+    <br/>
+    <button type="submit">Регистрация</button>
+    | <a th:href="@{|/login|}" th:text="'Log in'"></a>
+    <span th:utext="${successMessage}"></span>
+    <div th:if="${bindingResult!=null && bindingResult.getAllErrors()!=null}">
+        <ul th:each="data : ${bindingResult.getAllErrors()}">
+            <li th:text="${data.getObjectName() + ' :: ' + data.getDefaultMessage()}"></li>
+        </ul>
+    </div>
+</form>
+
+</body>
+</html>
