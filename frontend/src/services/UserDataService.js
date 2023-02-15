@@ -2,7 +2,7 @@ import http from '../http-common'
 
 class UserDataService {
     getAll() {
-        return http.get('/main')
+        return http.get('/login')
     }
     /*
         get(id) {

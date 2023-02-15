@@ -13,7 +13,13 @@ const router = createRouter({
             path:'/',
             alias: '/login',
             name: 'Login',
-            component: Login
+            component: () => import("./components/Login-form.vue")
+        },
+        {
+            path:'/register',
+            alias: '/register',
+            name: 'Registration',
+            component: () => import("./components/Registration-form.vue")
         },
         {
             path: '/main',

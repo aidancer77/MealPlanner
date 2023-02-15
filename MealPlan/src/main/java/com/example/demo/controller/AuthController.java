@@ -1,28 +1,35 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.User;
-import com.example.demo.service.UserService;
+import com.example.demo.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.List;
-
-@Controller
+@RestController
+@RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:5173/")
 public class AuthController {
-    @Autowired
-    UserService userService;
 
-    @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
-    public String login(){
-        return "auth/login";
+    private Logger logger = LoggerFactory.getLogger(AuthController.class);
+    @Autowired
+    UserRepository userRepository;
+
+    @GetMapping("/login")
+    public ResponseEntity<Object> login() {
+        try {
+            Iterable<User> users = userRepository.findAll();
+            return new ResponseEntity<Object>(users, HttpStatus.OK);
+        } catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+            return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+        }
     }
 
-    @RequestMapping(value = {"/register"}, method = RequestMethod.GET)
+    /*@RequestMapping(value = {"/register"}, method = RequestMethod.GET)
     public String register(Model model){
         model.addAttribute("user", new User());
         return "auth/register";
@@ -31,7 +38,7 @@ public class AuthController {
     @RequestMapping(value = {"/register"}, method = RequestMethod.POST)
     public String registerUser(Model model, @Valid User user, BindingResult bindingResult){
         if (user.getPassword() == user.getConfirmPassword()){
-            System.out.println(" пароль не подтврежден ");
+            System.out.println(" пароль не подтвержден ");
             model.addAttribute("successMessage", "пароль не подтврежден");
             return "auth/register";
         }
@@ -51,5 +58,5 @@ public class AuthController {
         model.addAttribute("successMessage", "User registered successfully!");
 
         return "auth/login";
-    }
+    }*/
 }

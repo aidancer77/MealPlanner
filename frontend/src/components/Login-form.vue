@@ -21,11 +21,13 @@
 
 <template>
 
-<div class="login-form">
+<div class="login-form" action="@{/login}">
   <h2 class="login-form__h2">Войти в аккаунт</h2>
   <input class="login-form__input login-form__input_email" type="email" placeholder="Электронная почта" name="email">
   <input class="login-form__input login-form__input_password" type="password" placeholder="Пароль" name="password">
-  <Button class="login-form__button" text="Войти" type="submit"></Button>
+  <router-link to="/main" tag="button">
+    <Button class="login-form__button" text="Войти" type="submit"></Button>
+  </router-link>
 </div>
 <div class="registration-offer">
     <h3 class="registration-offer__h3">Еще не зарегистрированы?</h3>
